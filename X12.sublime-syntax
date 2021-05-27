@@ -1,0 +1,127 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: EDI
+file_extensions: [edi, x12]
+first_line_match: '(ISA\*)'
+scope: source.edi
+
+contexts:
+  # The prototype context is prepended to all contexts but those setting
+  # meta_include_prototype: false.
+  # prototype:
+  #  - include: delimiter1
+
+  main:
+    # The main context is the initial starting point of our syntax.
+    # Include other contexts from here (or specify them directly).
+    - include: isaenvelope
+    - include: gsenvelope
+    - include: transactionset
+    - include: delimiter1
+    - include: delimiter2
+    - include: heading
+    # - include: numbers
+    - include: item
+    - include: detail
+    - include: summary
+
+  isaenvelope:
+    # Note that blackslashes don't need to be escaped within single quoted
+    # strings in YAML. When using single quoted strings, only single quotes
+    # need to be escaped: this is done by using two single quotes next to each
+    # other.
+    - match: '(ISA)(\*)(\w+)(\*)(\s{10})(\*)(\w+)(\*)(\s{10})(\*)(\w+)(\*)(.{15})(\*)(\w+)(\*)(.{15})(\*)(\w+)(\*)(\w+)(\*)(.{1})(\*)(\w+)(\*)(\w+)(\*)(\w+)(\*)(\w+)(\*)(.{1})(~)'
+      captures:
+        1: keyword.control.edi
+        2: string.edi
+        4: string.edi
+        6: string.edi
+        8: string.edi
+        10: string.edi
+        11: constant.numeric.edi
+        12: string.edi
+        13: constant.numeric.edi
+        14: string.edi
+        15: entity.name.edi
+        16: string.edi
+        17: entity.name.edi
+        18: string.edi
+        20: string.edi
+        22: string.edi
+        24: string.edi
+        26: string.edi
+        27: keyword.control.edi
+        28: string.edi
+        30: string.edi
+        32: string.edi
+        34: entity.name.edi
+
+  gsenvelope:
+    # Note that blackslashes don't need to be escaped within single quoted
+    # strings in YAML. When using single quoted strings, only single quotes
+    # need to be escaped: this is done by using two single quotes next to each
+    # other.
+    # - include: delimiter1
+    - match: '(GS)(\*)(\w+)(\*)(\w+)(\*)(\w+)(\*)(\w+)(\*)(\w+)(\*)(\w+)(\*)(\w+)(\*)(\w+)(~)'
+      captures:
+        1: keyword.control.edi
+        2: string.edi
+        3: variable.parameter.edi
+        4: string.edi
+        5: constant.numeric.edi
+        6: string.edi
+        7: entity.name.edi
+        8: string.edi
+        # 9: keyword.control.edi
+        10: string.edi
+        12: string.edi
+        14: string.edi
+        16: string.edi
+        18: entity.name.edi
+
+  transactionset:
+    - match: '(ST)(\*)(\w+)(\*)(\w+)(~)'
+      captures:
+        1: keyword.control.edi
+        2: string.edi
+        3: variable.parameter.edi
+        4: string.edi
+        6: entity.name.edi
+
+  delimiter1:
+    - match: '(\*|:|\>|\^)'
+      scope: string.edi
+
+  delimiter2:
+    - match: '~'
+      scope: entity.name.edi
+  # numbers:
+  #   - match: '\b(-)?[0-9.]+\b'
+  #     scope: constant.numeric.edi
+
+  heading:
+    - match: '\b(?<!\*)(TD5|REF|ST|BIG|BRA|BMG|BGN|BSN|BSS|((AK)+\d)|((W)+(27|28|05|09|66|6|06))|R2|((G)+(01|27|50|61|62|66|68|69|72|23))|BFR|NTE|TX1|CUR|BCT|DMG|BPR|MIT|TRN|BEG|BAK|CSH|PER|FOB|SAC|ITD|DTM|CTB|(N+\d)|MSG)\b'
+      scope: constant.numeric.edi
+
+  item:
+    - match: '(PO1|IT1|G17)'
+      scope: entity.name.edi
+      push: detail
+
+  detail:
+    - include: delimiter1
+    - include: delimiter2
+
+    - match: '\b(?<!\*)(REF|CRC|QTY|CUR|IT3|TXI|CTP|PAM|MEA|PID|MEA|PWK|PKG|PO4|ITD|YNQ|PER|SDQ|DTM|CAD|L7|SR|SAC|TXI|SLN|DTM|PID|TC2|TXI|N1|N2|N3|N4|PER|DMG|LM|LQ|V1|R4|DTM|FA1|FA2|LIN|G69|G70|N9|MTX|G23|G72|G73|G69|G19|G20|G25|SN1|SLN|PRF)\b'
+      scope: storage.type.edi
+
+    - match: '(PO1|IT1|G17)|(TDS|ISS|CTT)'
+      captures:
+        1: entity.name.edi
+        2: variable.parameter.edi
+      pop: true
+
+  summary:
+    - match: '\b(?<!\*)(CTT|SE|GE|IEA|AMT|TDS|TXI|TXP|CAD|ISS|PID|W03|((G)+(31|33))|((G|W)76))\b'
+      scope: variable.parameter.edi
