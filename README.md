@@ -1,6 +1,4 @@
-# X12-Syntax-Definition-for-SublimeText
-
-## Syntax highlighting for common EDI X12 formats
+# Syntax highlighting for common EDI X12 formats
 
 - Parses Enveloping information, headers, qualifiers, and some looping (still building out for some specs)
 - Best support for 810, 850, 855, 856, 875, 880, 997
