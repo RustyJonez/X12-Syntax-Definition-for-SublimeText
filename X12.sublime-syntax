@@ -118,13 +118,14 @@ contexts:
     - include: delimiter1
     - include: delimiter2
 
-    - match: '\b(?<!\*)(REF|CRC|QTY|CUR|IT3|TXI|CTP|PAM|MEA|PID|MEA|PWK|PKG|PO4|ITD|YNQ|PER|SDQ|DTM|CAD|L7|SR|SAC|TXI|SLN|DTM|PID|TC2|TXI|N1|N2|N3|N4|PER|DMG|LM|LQ|V1|R4|DTM|FA1|FA2|LIN|G62|G69|G70|N9|MTX|G23|G72|G73|G69|G19|G20|G25|SN1|SLN|PRF|W01|W12|W76|MAN|AMT|W27|LE|LS)\b'
+    - match: '\b(?<!\*)(REF|CRC|QTY|CUR|IT3|TXI|CTP|PAM|MEA|PID|MEA|PWK|PKG|PO4|ITD|YNQ|PER|SDQ|DTM|CAD|L7|SR|SAC|TXI|SLN|DTM|PID|TC2|TXI|N1|N2|N3|N4|PER|DMG|LM|LQ|V1|R4|DTM|FA1|FA2|LIN|G62|G69|G70|N9|MTX|G23|G72|G73|G69|G19|G20|G25|SN1|SLN|PRF|W01|W12|MAN|AMT|W27|LE|LS)\b'
       scope: storage.type.edi
 
-    - match: '\b(?<!\*)(PO1|IT1|G17|LX)|(?<!\*)(SE|W03|TDS|ISS|CTT)\b'
-      captures:
-        1: entity.name.edi
-        2: variable.parameter.edi
+    - match: '\b(?<!\*)(PO1|IT1|G17|LX)\b'
+      scope: entity.name.edi
+
+    - match: '\b(?<!\*)(SE|W03|W76|TDS|ISS|CTT)\b'
+      scope: variable.parameter.edi
       pop: true
 
   summary:
