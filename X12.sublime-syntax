@@ -8,6 +8,7 @@ scope: source.edi
 
 variables:
   segdelim: '(~|\||!|\+)'
+  ilopen: '\b(?<!\*)(PO1|IT1|G17|LX)|((HL)(\*)(.*)(\*)(.*)(\*)(O|I|P))\b'
 
 contexts:
   # The prototype context is prepended to all contexts but those setting
@@ -35,7 +36,7 @@ contexts:
     # need to be escaped: this is done by using two single quotes next to each
     # other.
     # - include: delimiter1
-    - match: '(ISA)(\*)(\w+)(\*)(\s{10})(\*)(\w+)(\*)(\s{10})(\*)(\w+)(\*)(.{15})(\*)(\w+)(\*)(.{15})(\*)(\w+)(\*)(\w+)(\*)(.{1})(\*)(\w+)(\*)(\w+)(\*)(\w+)(\*)(\w+)(\*)(.{1}){{segdelim}}'
+    - match: '(ISA)(\*)(\w+)(\*)(\s{10}|\w{10})(\*)(\w+)(\*)(\s{10}|\w{10})(\*)(\w+)(\*)(.{15})(\*)(\w+)(\*)(.{15})(\*)(\w+)(\*)(\w+)(\*)(.{1})(\*)(\w+)(\*)(\w+)(\*)(\w+)(\*)(\w+)(\*)(.{1}){{segdelim}}'
       captures:
         1: keyword.control.edi
         2: string.edi
@@ -106,12 +107,30 @@ contexts:
   #     scope: constant.numeric.edi
 
   heading:
-    - match: '\b(?<!\*)(TD5|REF|ST|BIG|BRA|BMG|BGN|BSN|BSS|((AK)+\d)|((W)+(27|28|05|09|66|6|06))|R2|((G)+(01|27|50|61|62|66|68|69|72|23))|BFR|NTE|TX1|CUR|BCT|DMG|BPR|MIT|TRN|BEG|BAK|CSH|PER|FOB|SAC|ITD|DTM|CTB|(N+\d)|MSG)\b'
+    - match: '\b(?<!\*)(TD5|TD1|REF|ST|BIG|BRA|BMG|BGN|BSN|BSS|((AK)+\d)|((W)+(27|28|05|09|66|6|06))|R2|((G)+(01|27|50|61|62|66|68|69|72|23))|BFR|NTE|TX1|CUR|BCT|DMG|BPR|MIT|TRN|BEG|BAK|CSH|PER|FOB|SAC|ITD|DTM|CTB|(N+\d)|MSG)\b'
       scope: constant.numeric.edi
 
+    - match: '\b(?<!\*)((HL)(\*)(.*)(\*)(.*)(\*)(S))\b'
+      captures:
+          2: constant.numeric.edi
+          3: string.edi
+          4: variable.parameter.edi
+          5: string.edi
+          6: storage.type.edi
+          7: string.edi
+          8: constant.numeric.edi
+
   item:
-    - match: '(PO1|IT1|G17|LX)'
-      scope: entity.name.edi
+    - match: '{{ilopen}}'
+      captures:
+          1: entity.name.edi
+          3: entity.name.edi
+          4: string.edi
+          5: variable.parameter.edi
+          6: string.edi
+          7: storage.type.edi
+          8: string.edi
+          9: constant.numeric.edi
       push: detail
 
   detail:
@@ -121,8 +140,16 @@ contexts:
     - match: '\b(?<!\*)(REF|CRC|QTY|CUR|IT3|TXI|CTP|PAM|MEA|PID|MEA|PWK|PKG|PO4|ITD|YNQ|PER|SDQ|DTM|CAD|L7|SR|SAC|TXI|SLN|DTM|PID|TC2|TXI|N1|N2|N3|N4|PER|DMG|LM|LQ|V1|R4|DTM|FA1|FA2|LIN|G62|G69|G70|N9|MTX|G23|G72|G73|G69|G19|G20|G25|SN1|SLN|PRF|W01|W12|MAN|AMT|W27|LE|LS)\b'
       scope: storage.type.edi
 
-    - match: '\b(?<!\*)(PO1|IT1|G17|LX)\b'
-      scope: entity.name.edi
+    - match: '{{ilopen}}'
+      captures:
+          1: entity.name.edi
+          3: entity.name.edi
+          4: string.edi
+          5: variable.parameter.edi
+          6: string.edi
+          7: storage.type.edi
+          8: string.edi
+          9: constant.numeric.edi
 
     - match: '\b(?<!\*)(SE|W03|W76|TDS|ISS|CTT)\b'
       scope: variable.parameter.edi
