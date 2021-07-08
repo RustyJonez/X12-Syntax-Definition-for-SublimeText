@@ -86,7 +86,7 @@ contexts:
         18: entity.name.edi
 
   transactionset:
-    - match: '(ST)(\*)(\w+)(\*)(\w+){{segdelim}}'
+    - match: '\b(?<!\*)(ST)(\*)(\w+)(\*)(\w+){{segdelim}}\b'
       captures:
         1: keyword.control.edi
         2: string.edi
