@@ -7,6 +7,9 @@
 - *WIP* - some doctype elements/qualifiers still being added
 - Regexreplace shortcuts "coming soon" for quick formatting (add delims, line breaks, etc)
 
+### Installation:
+- Download the tmlanguage file and place into your Sublimetext user directory (usually C:\Users\[YOUR USERNAME]\AppData\Roaming\Sublime Text 3\Packages\User)
+
 ### Update 7/7/21
 - Better support for Warehouse Shipping Order/Advice (940/945)
 - Some ASN (856) HL looping tweaks
