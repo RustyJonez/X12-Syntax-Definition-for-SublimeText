@@ -8,7 +8,7 @@
 - Regexreplace shortcuts "coming soon" for quick formatting (add delims, line breaks, etc)
 
 ### Installation:
-- Download the tmlanguage file and place into your Sublimetext user directory (usually C:\Users\[YOUR USERNAME]\AppData\Roaming\Sublime Text 3\Packages\User)
+- Download the .sublime-syntax file and place into your Sublimetext user directory (usually C:\Users\[YOUR USERNAME]\AppData\Roaming\Sublime Text 3\Packages\User)
 
 ### Update 7/7/21
 - Better support for Warehouse Shipping Order/Advice (940/945)
