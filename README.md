@@ -1,4 +1,4 @@
-# Syntax highlighting for common EDI X12 formats
+# Syntax highlighting for EDI X12 documents
 
 ![image](https://user-images.githubusercontent.com/52978897/124922934-f9f4fb80-dfc7-11eb-9b06-56cb26977553.png)
 
