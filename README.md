@@ -7,7 +7,7 @@
   - 810, 850, 855, 856, 875, 880, 940, 945, 997
 - *WIP* - some doctype elements/qualifiers still being added
 
-## Related X12 tools in the works -
+#### Related X12 tools in the works -
 Quick format shortcuts: Add delimeters, line breaks, "flatten" file, etc.
 
 ### Installation:
